@@ -1,12 +1,19 @@
-const http = require('http');
-const PORT = 3000;
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+const port = 3000
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
-});
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
+app.post('/', function (req, res) {
+  let data = req.body;
+  console.log(data);
+})
+
+app.get('/', function (req, res) {
+  console.log('A GET METHOD');
+})
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
