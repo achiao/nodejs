@@ -1,19 +1,29 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-const port = 3000
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+const port = 443;
+const https = require("https");
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/', function (req, res) {
+app.post("/", function (req, res) {
   let data = req.body;
-  console.log(data);
-})
+  const payload = data.events.message.text;
 
-app.get('/', function (req, res) {
-  console.log('A GET METHOD');
-})
+  https.get(
+    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${payload}"}`
+  );
+
+  console.log(data);
+});
+
+app.get("/", function (req, res) {
+  res.send("Hello World");
+  console.log("A GET METHOD");
+});
+
+//
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
