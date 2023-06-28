@@ -15,12 +15,12 @@ app.post("/", function (req, res) {
     `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${payload}"}`
   );
 
+  res.send("POST Method")
   console.log(data);
 });
 
 app.get("/", function (req, res) {
   res.send("Hello World");
-  console.log("A GET METHOD");
 });
 
 //
