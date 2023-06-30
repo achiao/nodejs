@@ -43,7 +43,7 @@ async function getAccessToken() {
       .final();
 
     console.log(result);
-    accessToken = result; // If accessToken is a global variable or it is defined before this line.
+    return result; // If accessToken is a global variable or it is defined before this line.
   } catch (error) {
     console.error(error);
   }
