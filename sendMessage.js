@@ -1,34 +1,43 @@
 const line = require("@line/bot-sdk");
 const https = require("https");
 const btoa = require("btoa");
-module.exports = async function sendMessage(accessToken, userId) {
-  const payload = "### " + accessToken + " ### " + userId;
-  console.log(payload);
-  https.get(
-    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${payload}"}`
+const getAccessToken = require("./token.js");
+const userId = "Ud937ee86912560d209b65ab4942b0e9a";
+const axios = require("axios");
+
+/**
+ * 1. use token.js to get access token
+ * 2. use access token to get channel access token
+ * 3. following code is how to exchange channel access token
+ *
+ **/
+
+(async () => {
+  const axios = require("axios");
+
+  const url = "https://api.line.me/oauth2/v2.1/token";
+
+  const data = new URLSearchParams();
+  data.append("grant_type", "client_credentials");
+  data.append(
+    "client_assertion_type",
+    "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
   );
-  const client = new line.Client({
-    channelAccessToken: accessToken,
-  });
+  data.append(
+    "client_assertion",
+    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjA5ZjUwODc2LTFjMTktNDdkZS04NTY3LTY4M2NkODVkNWUxOCJ9.eyJpc3MiOiIxNjYxNDg4NzIwIiwic3ViIjoiMTY2MTQ4ODcyMCIsImF1ZCI6Imh0dHBzOi8vYXBpLmxpbmUubWUvIiwiZXhwIjoxNjg4MTIxODA5LCJ0b2tlbl9leHAiOjI1OTIwMDB9.WRfW1pQd31OD63BGis4-dQ9fs7ivAHZRg6jxuzTbdN3BqhABg8bclwIi56AnF4sfK-YBYKvcNPxW6ORgk_2aC9O8gKdeVgVCS9ogFcli4t3xznILzoKT6eBslNDjGpzFDBFRhHfTIZO1tm6ThbCGObC_FJdxy-TvKPNXs3wgGadcB8PDHJ_VlFtqCEvpJQZQGrsgvkQuO5hcHb1WVmzyZPw1l7lbzJeX4nW9NUfggOllm2nvqlRUl50tfJPtcynIzjwDvJQs6BtRswSXIBu32NYrYS-Q9f3faM1i83bq_xQqw92_YBuSy-Of-wbZEMERhQerbiEL5Tdkb2PBur09Qg"
+  );
 
-  const message = {
-    type: "text",
-    text: "傳送成功",
-  };
-
-  client
-    .pushMessage(userId, message)
-    .then(() => {
-      https.get(
-        `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${userId}"}`
-      );
+  axios
+    .post(url, data, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
     })
-    .catch((err) => {
-      // error handling
-      const payload = btoa(JSON.stringify(err));
-      https.get(
-        `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${payload}"}`
-      );
-      console.log(err);
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
     });
-};
+})();

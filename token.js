@@ -43,26 +43,10 @@ async function getAccessToken() {
       .final();
 
     console.log(result);
-    return result; // If accessToken is a global variable or it is defined before this line.
+    return result;
   } catch (error) {
     console.error(error);
   }
 }
 
 module.exports = getAccessToken;
-// let accessToken;
-
-// async function getAccessToken() {
-//     jose.JWS.createSign(
-//     { format: "compact", fields: header },
-//     JSON.parse(privateKey)
-//     )
-//     .update(JSON.stringify(payload))
-//     .final()
-//     .then((result) => {
-//         console.log(result);
-//         accessToken = result;
-//     });
-// }
-
-//
