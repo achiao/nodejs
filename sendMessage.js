@@ -10,7 +10,7 @@ module.exports = async function sendMessage(accessToken, userId) {
   };
 
   client
-    .pushMessage("userId", message)
+    .pushMessage(userId, message)
     .then(() => {
       console.log("QQ");
     })
