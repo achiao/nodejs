@@ -10,12 +10,12 @@ const btoa = require("btoa");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post("/", function (req, res) {
+app.post("/", async function (req, res) {
   let data = req.body;
   const event = data.events[0];
   //const payload = event.message.text;
   const userId = event.source.userId;
-  const accessToken = getAccessToken();
+  const accessToken = await getAccessToken();
   const payload = btoa(JSON.stringify(event));
   https.get(
     `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${payload}"}`
@@ -47,7 +47,7 @@ app.post("/", function (req, res) {
   // synologyReq.write(payload);
   // synologyReq.end();
   // console.log(data);
-  sendMessage(accessToken, userId);
+  await sendMessage(accessToken, userId);
 
   res.send(JSON.stringify(data));
 });
