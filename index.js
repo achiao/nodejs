@@ -16,6 +16,10 @@ app.post("/", async function (req, res) {
   //const payload = event.message.text;
   const userId = event.source.userId;
   const accessToken = await getAccessToken();
+  console.log("AAA: " + accessToken);
+  https.get(
+    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text": AAAA "${accessToken}"}`
+  );
   const payload = btoa(JSON.stringify(event));
   function delay(milliseconds) {
     return new Promise((resolve) => {
@@ -23,44 +27,22 @@ app.post("/", async function (req, res) {
     });
   }
   https.get(
-    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${payload}"}`
+    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text": PPPP "${payload}"}`
   );
+  console.log("PPP: " + payload);
   await delay(1000);
   https.get(
-    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${accessToken}"}`
+    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text": AAAA "${accessToken}"}`
   );
+  console.log("AAA: " + accessToken);
   await delay(1000);
   https.get(
-    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${userId}"}`
+    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text": UUUU "${userId}"}`
   );
-  // const options = {
-  //   hostname: "chat.synology.com",
-  //   port: 443,
-  //   path: "/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22",
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //     "Content-Length": payload.length,
-  //   },
-  // };
-  // console.log(payload);
-  // var synologyReq = https.request(options, (res) => {
-  //   console.log("statusCode:", res.statusCode);
-  //   console.log("headers:", res.headers);
-
-  //   res.on("data", (d) => {
-  //     process.stdout.write(d);
-  //   });
-  // });
-
-  // synologyReq.on("error", (e) => {
-  //   console.error(e);
-  // });
-
-  // synologyReq.write(payload);
-  // synologyReq.end();
-  // console.log(data);
+  console.log("UUU: " + userId);
+  console.log("sendMessage begin");
   await sendMessage(accessToken, userId);
+  console.log("sendMessage End");
   await delay(1000);
   https.get(
     `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"done"}`
