@@ -20,9 +20,9 @@ app.post("/", function (req, res) {
     `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text":"${payload}"}`
   );
   // console.log(data);
-  sendMessage(accessToken, userId);
+  // sendMessage(accessToken, userId);
 
-  res.send("POST Method: " + JSON.stringify(data));
+  res.send(JSON.stringify(data));
 });
 
 app.get("/", function (req, res) {
