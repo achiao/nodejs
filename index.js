@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.post("/", async function (req, res) {
   let data = req.body;
   const event = data.events[0];
-  const payload = `@channel ${event.message.text}`;
+  const payload = `@channel ${event.message.id}`;
   const userId = event.source.userId;
 
   https.get(
