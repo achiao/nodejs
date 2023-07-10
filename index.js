@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.post("/", async function (req, res) {
   let data = req.body;
   const event = data.events[0];
+  // in order to trigger deployment again
   const payload = `@channel ${event.message.text}`;
   const userId = event.source.userId;
   https.get(
