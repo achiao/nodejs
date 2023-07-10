@@ -1,7 +1,7 @@
 const { ImgurClient } = require("imgur");
 
 module.exports.getFileURL = async function getFileURL(messageId, client) {
-  client.getMessageContent(messageId).then((stream) => {
+  return await client.getMessageContent(messageId).then((stream) => {
     return new Promise(function (resolve) {
       var chunks = [];
       stream.on("data", async (chunk) => {
