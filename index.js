@@ -4,7 +4,7 @@ const app = express();
 const port = 3001;
 const https = require("https");
 const line = require("@line/bot-sdk");
-const getFile = require("./getFile.js");
+const getFileURL = require("./getFile.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,7 +29,7 @@ app.post("/", async function (req, res) {
     // Upload image to imgur and get fileURL
     const messageId = message.id;
 
-    fileURL = await getFile(messageId, client);
+    fileURL = await getFileURL(messageId, client);
   }
   https.get(
     //`https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text": "${payload}"}`
