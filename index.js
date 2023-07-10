@@ -4,7 +4,7 @@ const app = express();
 const port = 3001;
 const https = require("https");
 const line = require("@line/bot-sdk");
-const getFileURL = require("./getFile.js");
+const getFileURL = require("./getFile.js").getFileURL;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
