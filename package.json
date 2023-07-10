@@ -12,7 +12,9 @@
     "btoa": "^1.2.1",
     "express": "^4.18.2",
     "https": "^1.0.0",
-    "node-jose": "^2.2.0"
+    "imgur": "^2.3.0",
+    "node-jose": "^2.2.0",
+    "tslib": "^2.6.0"
   },
   "scripts": {
     "start": "node index.js"
