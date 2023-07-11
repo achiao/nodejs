@@ -16,7 +16,6 @@ app.post("/", async function (req, res) {
   const type = message.type;
   const client = new line.Client({
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-    //"EYkQFUuJXrGi8YNH9KDAswSZO/y6OKeMc3fmgxWCg1uQcr94gfKqrejbiIHEO/JT5rJ9higpwew4GnX0lMYWAsM/NgCA9PZfLUjnD50AVQEC/TDVGpfKoM6oVecD4hxieov3f7Rq/EVd/qY8jLkChAdB04t89/1O/w1cDnyilFU=",
   });
 
   let payload = "";
@@ -31,7 +30,6 @@ app.post("/", async function (req, res) {
     fileURL = await getFileURL(messageId, client);
   }
   https.get(
-    //`https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22e3UnCYgHYMB33SHq4QRG3aNOkj37uI3BepeZTPgcgn1EBbuAVVpJVAMOn8aCp76j%22&payload={"text": "${payload}"}`
     `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22${process.env.CHAT_TOKEN}%22&payload={"text": "${payload}", "file_url": "${fileURL}"}`
   );
   const userId = event.source.userId;
