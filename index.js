@@ -5,6 +5,7 @@ const port = 3001;
 const https = require("https");
 const line = require("@line/bot-sdk");
 const getFileURL = require("./getFile.js").getFileURL;
+const getText = require("./getText.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,11 +19,11 @@ app.post("/", async function (req, res) {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
   });
 
-  let payload = "";
+  let text = "";
   let fileURL = "";
 
   if (type === "text") {
-    payload = `@channel ${message.text}`;
+    text = getText(message.text);
   } else if (type === "image") {
     // Upload image to imgur and get fileURL
     const messageId = message.id;
@@ -30,7 +31,7 @@ app.post("/", async function (req, res) {
     fileURL = await getFileURL(messageId, client);
   }
   https.get(
-    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22${process.env.CHAT_TOKEN}%22&payload={"text": "${payload}", "file_url": "${fileURL}"}`
+    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22${process.env.CHAT_TOKEN}%22&payload={"text": "${text}", "file_url": "${fileURL}"}`
   );
   const userId = event.source.userId;
   const responseMessage = {
