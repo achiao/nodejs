@@ -36,8 +36,7 @@ app.post("/", async function (req, res) {
     }
   });
   await sendMessageToChat(text, fileURL);
-
-  debounce(sendMessageToLine(userId), 1000);
+  sendMessageToLine(client, userId);
 });
 
 app.get("/", function (req, res) {

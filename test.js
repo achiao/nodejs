@@ -10,7 +10,6 @@ async function first() {
       }, 1000);
     });
   });
-  console.log(aaa);
 }
 
 let a = {
@@ -82,23 +81,20 @@ let a = {
     },
   ],
 };
-const debounce = require("debounce");
+var debounce = require('lodash.debounce');
 (async () => {
   //const fileURL = await first();
-  function con() {
-    console.log("123123123");
-  }
-  function showLog() {
-    debounce(con, 1000, true);
-  }
-  showLog();
-  showLog();
-  showLog();
-  showLog();
-  showLog();
-  showLog();
-  showLog();
-  setTimeout(showLog, 10000);
+ 
+  let showLog = 
+    debounce((text) => {
+      console.log(text)
+    }, 1000);
+  
+  showLog(1);
+  showLog(2);
+  showLog(3);
+
+  // setTimeout(con, 5000);
 
   // console.log(123);
   // a.events.forEach((element) => {
