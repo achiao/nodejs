@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const debounce = require("debounce");
 const app = express();
 const port = 3001;
 const line = require("@line/bot-sdk");
