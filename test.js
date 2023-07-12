@@ -82,11 +82,27 @@ let a = {
     },
   ],
 };
+const debounce = require("debounce");
 (async () => {
   //const fileURL = await first();
-  console.log(123);
-  a.events.forEach((element) => {
-    console.log(element);
-  });
+  function con() {
+    console.log("123123123");
+  }
+  function showLog() {
+    debounce(con, 1000, true);
+  }
+  showLog();
+  showLog();
+  showLog();
+  showLog();
+  showLog();
+  showLog();
+  showLog();
+  setTimeout(showLog, 10000);
+
+  // console.log(123);
+  // a.events.forEach((element) => {
+  //   console.log(element);
+  // });
   //console.log(fileURL);
 })();
