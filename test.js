@@ -82,6 +82,7 @@ let a = {
   ],
 };
 var debounce = require('lodash.debounce');
+const sendMessageToLine = require("./sendMessageToLine.js");
 (async () => {
   //const fileURL = await first();
  
@@ -93,6 +94,10 @@ var debounce = require('lodash.debounce');
   showLog(1);
   showLog(2);
   showLog(3);
+  sendMessageToLine('client', 1)
+  sendMessageToLine('client', 2)
+  sendMessageToLine('client', 3)
+  sendMessageToLine('client', 4)
 
   // setTimeout(con, 5000);
 
