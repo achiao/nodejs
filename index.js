@@ -1,11 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const debounce = require("debounce");
 const app = express();
 const port = 3001;
 const line = require("@line/bot-sdk");
 const getFileURL = require("./getFile.js").getFileURL;
 const getText = require("./getText.js");
 const sendMessageToChat = require("./sendMessageToChat.js");
+const sendMessageToLine = require("./sendMessageToLine.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,16 +37,7 @@ app.post("/", async function (req, res) {
   });
   await sendMessageToChat(text, fileURL);
 
-  const responseMessage = {
-    type: "text",
-    text: "傳送成功",
-  };
-
-  client
-    .pushMessage(userId, responseMessage)
-    .then(() => {})
-    .catch((err) => {});
-  res.send(JSON.stringify(data));
+  debounce(sendMessageToLine(userId), 1000);
 });
 
 app.get("/", function (req, res) {
