@@ -2,38 +2,39 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3001;
-const https = require("https");
 const line = require("@line/bot-sdk");
 const getFileURL = require("./getFile.js").getFileURL;
 const getText = require("./getText.js");
+const sendMessageToChat = require("./sendMessageToChat.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/", async function (req, res) {
   let data = req.body;
-  const event = data.events[0];
-  const message = data.events[0].message;
-  const type = message.type;
   const client = new line.Client({
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
   });
-
+  let userId = "";
   let text = "";
   let fileURL = "";
+  data.events.forEach(async (event) => {
+    const message = event?.message;
+    const type = message?.type;
+    if (!message || !type) {
+      return;
+    }
+    userId = event.source.userId;
 
-  if (type === "text") {
-    text = getText(message.text);
-  } else if (type === "image") {
-    // Upload image to imgur and get fileURL
-    const messageId = message.id;
+    if (type === "text") {
+      text += getText(message.text) + "\\n";
+    } else if (type === "image") {
+      const messageId = message.id;
+      fileURL = await getFileURL(messageId, client);
+    }
+  });
+  await sendMessageToChat(text, fileURL);
 
-    fileURL = await getFileURL(messageId, client);
-  }
-  https.get(
-    `https://chat.synology.com/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22${process.env.CHAT_TOKEN}%22&payload={"text": "${text}", "file_url": "${fileURL}"}`
-  );
-  const userId = event.source.userId;
   const responseMessage = {
     type: "text",
     text: "傳送成功",
@@ -50,7 +51,6 @@ app.get("/", function (req, res) {
   res.send("Hello World");
 });
 
-//
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
