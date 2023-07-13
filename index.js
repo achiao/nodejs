@@ -19,7 +19,7 @@ app.post("/", async function (req, res) {
   let userId = "";
   let text = "";
   let fileURL = "";
-  data.events.forEach(async (event) => {
+  for (let event of data.events) {
     const message = event?.message;
     console.log("event", event);
     const type = message?.type;
@@ -35,7 +35,8 @@ app.post("/", async function (req, res) {
       fileURL = await getFileURL(messageId, client);
       console.log("fileURL1", fileURL);
     }
-  });
+  }
+
   console.log("fileURL2", fileURL);
   console.log("text", text);
   await sendMessageToChat(text, fileURL);
