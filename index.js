@@ -21,6 +21,7 @@ app.post("/", async function (req, res) {
   let fileURL = "";
   data.events.forEach(async (event) => {
     const message = event?.message;
+    console.log("event", event);
     const type = message?.type;
     if (!message || !type) {
       return;
@@ -32,9 +33,10 @@ app.post("/", async function (req, res) {
     } else if (type === "image") {
       const messageId = message.id;
       fileURL = await getFileURL(messageId, client);
+      console.log("fileURL1", fileURL);
     }
   });
-  console.log("fileURL", fileURL);
+  console.log("fileURL2", fileURL);
   console.log("text", text);
   await sendMessageToChat(text, fileURL);
   sendMessageToLine(client, userId);
