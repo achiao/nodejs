@@ -1,32 +1,37 @@
-const { ImgurClient } = require("imgur");
+import { ImgurClient } from 'imgur';
+import { Client } from '@line/bot-sdk';
 
-module.exports.getFileURL = async function getFileURL(messageId, client) {
+export default async function getFileURL(
+  messageId: string,
+  client: Client
+): Promise<string> {
   return await client.getMessageContent(messageId).then((stream) => {
     return new Promise(function (resolve) {
-      var chunks = [];
-      stream.on("data", async (chunk) => {
+      const chunks: Buffer[] = [];
+      stream.on('data', async (chunk: Buffer) => {
         chunks.push(chunk);
       });
-      stream.on("error", (err) => {
+      stream.on('error', (err: Error) => {
+        console.log(err);
         // error handling
       });
-      stream.on("end", async () => {
+      stream.on('end', async () => {
         const base64Image = Buffer.from(Buffer.concat(chunks)).toString(
-          "base64"
+          'base64'
         );
         const client = new ImgurClient({
           clientId: process.env.CLIENT_ID,
           clientSecret: process.env.CLIENT_SECRET,
-          refreshToken: process.env.REFRESH_TOKEN,
+          refreshToken: process.env.REFRESH_TOKEN
         });
 
         const response = await client.upload({
           image: base64Image,
-          type: "base64",
+          type: 'base64'
         });
         const fileURL = response.data.link;
         resolve(fileURL);
       });
     });
   });
-};
+}
