@@ -1,3 +1,4 @@
+'use strict';
 let promise = new Promise(function (resolve, reject) {
   setTimeout(() => resolve('done!'), 1000);
 });
@@ -11,8 +12,7 @@ async function first() {
     });
   });
 }
-
-const a = {
+let a = {
   destination: 'xxxxxxxxxx',
   events: [
     {
@@ -82,26 +82,20 @@ const a = {
   ]
 };
 var debounce = require('lodash.debounce');
-const sendMessageToLine = require('./sendMessageToLine.js');
-const sendMessageToChat = require('./sendMessageToChat.js');
+const sendMessageToLine = require('./build/sendMessageToLine.js');
 (async () => {
   //const fileURL = await first();
-  await sendMessageToChat('123123123', 'https://i.imgur.com/fn9L5tF.jpg');
-  // let showLog =
-  //   debounce((text) => {
-  //     console.log(text)
-  //   }, 1000);
-
-  // showLog(1);
-  // showLog(2);
-  // showLog(3);
-  // sendMessageToLine('client', 1)
-  // sendMessageToLine('client', 2)
-  // sendMessageToLine('client', 3)
-  // sendMessageToLine('client', 4)
-
+  let showLog = debounce((text) => {
+    console.log(text);
+  }, 1000);
+  showLog(1);
+  showLog(2);
+  showLog(3);
+  sendMessageToLine('client', 1);
+  sendMessageToLine('client', 2);
+  sendMessageToLine('client', 3);
+  sendMessageToLine('client', 4);
   // setTimeout(con, 5000);
-
   // console.log(123);
   // a.events.forEach((element) => {
   //   console.log(element);

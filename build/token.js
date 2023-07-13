@@ -1,5 +1,4 @@
-"use strict";
-let jose = require("node-jose");
+import jose from 'node-jose';
 const privateKey = `
 {
   "alg": "RS256",
@@ -19,20 +18,20 @@ const privateKey = `
 }
 `;
 const header = {
-    alg: "RS256",
-    typ: "JWT",
-    kid: "09f50876-1c19-47de-8567-683cd85d5e18",
+    alg: 'RS256',
+    typ: 'JWT',
+    kid: '09f50876-1c19-47de-8567-683cd85d5e18'
 };
 const payload = {
-    iss: "1661488720",
-    sub: "1661488720",
-    aud: "https://api.line.me/",
+    iss: '1661488720',
+    sub: '1661488720',
+    aud: 'https://api.line.me/',
     exp: Math.floor(new Date().getTime() / 1000) + 60 * 30,
-    token_exp: 60 * 60 * 24 * 30,
+    token_exp: 60 * 60 * 24 * 30
 };
-async function getAccessToken() {
+export async function getAccessToken() {
     try {
-        const result = await jose.JWS.createSign({ format: "compact", fields: header }, JSON.parse(privateKey))
+        const result = await jose.JWS.createSign({ format: 'compact', fields: header }, JSON.parse(privateKey))
             .update(JSON.stringify(payload))
             .final();
         console.log(result);
@@ -42,4 +41,3 @@ async function getAccessToken() {
         console.error(error);
     }
 }
-module.exports = getAccessToken;

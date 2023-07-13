@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 const app = express();
 const port = 3001;
-import { Client, MessageEvent } from '@line/bot-sdk';
+import { Client } from '@line/bot-sdk';
 import getFileURL from './getFile';
 import getText from './getText';
 import sendMessageToChat from './sendMessageToChat';

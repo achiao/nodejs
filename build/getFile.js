@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const imgur_1 = require("imgur");
-async function getFileURL(messageId, client) {
+import { ImgurClient } from 'imgur';
+export default async function getFileURL(messageId, client) {
     return await client.getMessageContent(messageId).then((stream) => {
         return new Promise(function (resolve) {
             const chunks = [];
@@ -14,7 +12,7 @@ async function getFileURL(messageId, client) {
             });
             stream.on('end', async () => {
                 const base64Image = Buffer.from(Buffer.concat(chunks)).toString('base64');
-                const client = new imgur_1.ImgurClient({
+                const client = new ImgurClient({
                     clientId: process.env.CLIENT_ID,
                     clientSecret: process.env.CLIENT_SECRET,
                     refreshToken: process.env.REFRESH_TOKEN
@@ -23,11 +21,9 @@ async function getFileURL(messageId, client) {
                     image: base64Image,
                     type: 'base64'
                 });
-                console.log(response.data);
                 const fileURL = response.data.link;
                 resolve(fileURL);
             });
         });
     });
 }
-exports.default = getFileURL;

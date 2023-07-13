@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const AT_CHANNEL_DEBOUNCE_TIME = parseInt(process.env.AT_CHANNEL_DEBOUNCE_TIME);
 let lastAtChannelMessageTime = 0;
 function couldShowAtChannel() {
@@ -13,7 +11,6 @@ function couldShowAtChannel() {
         return false;
     }
 }
-function getText(text) {
+export default function getText(text) {
     return couldShowAtChannel() ? `@channel\\n ${text}` : text;
 }
-exports.default = getText;

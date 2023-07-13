@@ -7,7 +7,9 @@
     "rootDir": "src",
     "strict": true,
     "noImplicitAny": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   },
-  "include": ["src/**/*", "test.js"]
+  "include": ["src/**/*"],
+  "exclude": ["test.js"]
 }
