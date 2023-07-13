@@ -1,15 +1,19 @@
-import { debounce } from 'lodash';
+import pkg from 'lodash';
+const { debounce } = pkg;
 function sendMessage(client, userId) {
-    console.log(client, userId);
-    const message = {
-        type: 'text',
-        text: '傳送成功'
-    };
-    client
-        .pushMessage(userId, message)
-        .then(() => { })
-        .catch((err) => {
-        console.log(err);
+  console.log(client, userId);
+  const message = {
+    type: 'text',
+    text: '傳送成功'
+  };
+  client
+    .pushMessage(userId, message)
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
     });
 }
-export const sendMessageToLine = debounce(sendMessage, parseInt(process.env.LINE_RESPONSE_DEBOUNCE_TIME));
+export const sendMessageToLine = debounce(
+  sendMessage,
+  parseInt(process.env.LINE_RESPONSE_DEBOUNCE_TIME)
+);

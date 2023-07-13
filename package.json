@@ -5,6 +5,7 @@
   "main": "./build/index.js",
   "author": "darrenh",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@line/bot-sdk": "^7.5.2",
     "@types/lodash.debounce": "^4.0.7",
@@ -21,9 +22,9 @@
     "tslib": "^2.6.0"
   },
   "scripts": {
-    "start": "node ./build/index.js",
-    "dev": "node -r dotenv/config ./build/index.js dotenv_config_path=./.env.test",
-    "prod": "node -r dotenv/config ./build/index.js dotenv_config_path=./.env",
+    "start": "node --es-module-specifier-resolution=node ./build/index.js",
+    "dev": "node --es-module-specifier-resolution=node -r dotenv/config ./build/index.js dotenv_config_path=./.env.test",
+    "prod": "node --es-module-specifier-resolution=node -r dotenv/config ./build/index.js dotenv_config_path=./.env",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
