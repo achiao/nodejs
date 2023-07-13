@@ -34,6 +34,8 @@ app.post("/", async function (req, res) {
       fileURL = await getFileURL(messageId, client);
     }
   });
+  console.log("fileURL", fileURL);
+  console.log("text", text);
   await sendMessageToChat(text, fileURL);
   sendMessageToLine(client, userId);
 });

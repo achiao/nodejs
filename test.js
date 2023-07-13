@@ -81,23 +81,24 @@ let a = {
     },
   ],
 };
-var debounce = require('lodash.debounce');
+var debounce = require("lodash.debounce");
 const sendMessageToLine = require("./sendMessageToLine.js");
+const sendMessageToChat = require("./sendMessageToChat.js");
 (async () => {
   //const fileURL = await first();
- 
-  let showLog = 
-    debounce((text) => {
-      console.log(text)
-    }, 1000);
-  
-  showLog(1);
-  showLog(2);
-  showLog(3);
-  sendMessageToLine('client', 1)
-  sendMessageToLine('client', 2)
-  sendMessageToLine('client', 3)
-  sendMessageToLine('client', 4)
+  await sendMessageToChat("123123123", "https://i.imgur.com/fn9L5tF.jpg");
+  // let showLog =
+  //   debounce((text) => {
+  //     console.log(text)
+  //   }, 1000);
+
+  // showLog(1);
+  // showLog(2);
+  // showLog(3);
+  // sendMessageToLine('client', 1)
+  // sendMessageToLine('client', 2)
+  // sendMessageToLine('client', 3)
+  // sendMessageToLine('client', 4)
 
   // setTimeout(con, 5000);
 
