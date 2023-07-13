@@ -19,7 +19,7 @@ app.post('/', async function (req) {
   let userId = '';
   let text = '';
   let fileURL = '';
-  data.events.forEach(async (event: MessageEvent) => {
+  for (const event of data.events) {
     const message = event?.message;
     const type = message?.type;
     userId = event?.source?.userId || '';
@@ -33,7 +33,7 @@ app.post('/', async function (req) {
       const messageId = message.id;
       fileURL = await getFileURL(messageId, client);
     }
-  });
+  }
   await sendMessageToChat(text, fileURL);
   sendMessageToLine(client, userId);
 });
