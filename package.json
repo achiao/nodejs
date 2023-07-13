@@ -2,7 +2,7 @@
   "name": "nodejs-app",
   "version": "1.0.0",
   "description": "A minimal Node.js web application.",
-  "main": "index.js",
+  "main": "./build/index.js",
   "author": "darrenh",
   "license": "MIT",
   "dependencies": {
@@ -21,7 +21,7 @@
     "tslib": "^2.6.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node ./build/index.js",
     "dev": "node -r dotenv/config ./build/index.js dotenv_config_path=./.env.test",
     "prod": "node -r dotenv/config ./build/index.js dotenv_config_path=./.env",
     "lint": "eslint . --ext .ts",
