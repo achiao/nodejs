@@ -24,7 +24,6 @@ module.exports.getFileURL = async function getFileURL(messageId, client) {
           image: base64Image,
           type: "base64",
         });
-        console.log(response.data);
         const fileURL = response.data.link;
         resolve(fileURL);
       });
