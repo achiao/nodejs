@@ -1,17 +1,22 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-const app = express();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
+const app = (0, express_1.default)();
 const port = 3001;
-import { Client } from '@line/bot-sdk';
-import getFileURL from './getFile';
-import getText from './getText';
-import sendMessageToChat from './sendMessageToChat';
-import { sendMessageToLine } from './sendMessageToLine';
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const bot_sdk_1 = require("@line/bot-sdk");
+const getFile_1 = __importDefault(require("./getFile"));
+const getText_1 = __importDefault(require("./getText"));
+const sendMessageToChat_1 = __importDefault(require("./sendMessageToChat"));
+const sendMessageToLine_1 = require("./sendMessageToLine");
+app.use(body_parser_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.post('/', async function (req) {
     const data = req.body;
-    const client = new Client({
+    const client = new bot_sdk_1.Client({
         channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
     });
     let userId = '';
@@ -25,15 +30,15 @@ app.post('/', async function (req) {
             return;
         }
         if (type === 'text') {
-            text += getText(message.text) + '\\n';
+            text += (0, getText_1.default)(message.text) + '\\n';
         }
         else if (type === 'image') {
             const messageId = message.id;
-            fileURL = await getFileURL(messageId, client);
+            fileURL = await (0, getFile_1.default)(messageId, client);
         }
     }
-    await sendMessageToChat(text, fileURL);
-    sendMessageToLine(client, userId);
+    await (0, sendMessageToChat_1.default)(text, fileURL);
+    (0, sendMessageToLine_1.sendMessageToLine)(client, userId);
 });
 app.get('/', function (req, res) {
     res.send('Hello World');

@@ -1,4 +1,10 @@
-import jose from 'node-jose';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getAccessToken = void 0;
+const node_jose_1 = __importDefault(require("node-jose"));
 const privateKey = `
 {
   "alg": "RS256",
@@ -29,9 +35,9 @@ const payload = {
     exp: Math.floor(new Date().getTime() / 1000) + 60 * 30,
     token_exp: 60 * 60 * 24 * 30
 };
-export async function getAccessToken() {
+async function getAccessToken() {
     try {
-        const result = await jose.JWS.createSign({ format: 'compact', fields: header }, JSON.parse(privateKey))
+        const result = await node_jose_1.default.JWS.createSign({ format: 'compact', fields: header }, JSON.parse(privateKey))
             .update(JSON.stringify(payload))
             .final();
         console.log(result);
@@ -41,3 +47,4 @@ export async function getAccessToken() {
         console.error(error);
     }
 }
+exports.getAccessToken = getAccessToken;
