@@ -2,7 +2,6 @@ import { Client, Message } from '@line/bot-sdk';
 import { debounce } from 'lodash';
 
 function sendMessage(client: Client, userId: string) {
-  console.log(client, userId);
   const message: Message = {
     type: 'text',
     text: '傳送成功'

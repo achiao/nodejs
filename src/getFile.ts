@@ -29,6 +29,7 @@ export default async function getFileURL(
           image: base64Image,
           type: 'base64'
         });
+        console.log('Imgur: ', response.data);
         const fileURL = response.data.link;
         resolve(fileURL);
       });

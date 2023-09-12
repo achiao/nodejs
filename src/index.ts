@@ -23,6 +23,7 @@ app.post('/', async function (req) {
     const message = event?.message;
     const type = message?.type;
     userId = event?.source?.userId || '';
+    console.log('Line: ', data);
     if (!message || !type || userId === '') {
       return;
     }
