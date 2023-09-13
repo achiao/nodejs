@@ -16,8 +16,25 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.post('/', async function (req) {
     const data = req.body;
+    console.log('Line: ', data);
+    let channelAccessToken = '';
+    let chatToken = '';
+    if (data.destination === process.env.LINE_BOT_7F) {
+        channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_7F;
+        chatToken = process.env.CHAT_TOKEN_7F;
+    }
+    else if (data.destination === process.env.LINE_BOT_DEV) {
+        channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_DEV;
+        chatToken = process.env.CHAT_TOKEN_DEV;
+    }
+    else {
+        channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_11F;
+        chatToken = process.env.CHAT_TOKEN_11F;
+    }
+    console.log('channelAccessToken: ', channelAccessToken);
+    console.log('chatToken: ', chatToken);
     const client = new bot_sdk_1.Client({
-        channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+        channelAccessToken
     });
     let userId = '';
     let text = '';
@@ -37,7 +54,7 @@ app.post('/', async function (req) {
             fileURL = await (0, getFile_1.default)(messageId, client);
         }
     }
-    await (0, sendMessageToChat_1.default)(text, fileURL);
+    await (0, sendMessageToChat_1.default)(text, fileURL, chatToken);
     (0, sendMessageToLine_1.sendMessageToLine)(client, userId);
 });
 app.get('/', function (req, res) {

@@ -13,8 +13,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/', async function (req) {
   const data = req.body;
+  console.log('Line: ', data);
+  let channelAccessToken = '';
+  let chatToken = '';
+  if (data.destination === process.env.LINE_BOT_7F) {
+    channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_7F!;
+    chatToken = process.env.CHAT_TOKEN_7F!;
+  } else if (data.destination === process.env.LINE_BOT_DEV) {
+    channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_DEV!;
+    chatToken = process.env.CHAT_TOKEN_DEV!;
+  } else {
+    channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_11F!;
+    chatToken = process.env.CHAT_TOKEN_11F!;
+  }
+  console.log('channelAccessToken: ', channelAccessToken);
+  console.log('chatToken: ', chatToken);
   const client = new Client({
-    channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN!
+    channelAccessToken
   });
   let userId = '';
   let text = '';
@@ -23,7 +38,6 @@ app.post('/', async function (req) {
     const message = event?.message;
     const type = message?.type;
     userId = event?.source?.userId || '';
-    console.log('Line: ', data);
     if (!message || !type || userId === '') {
       return;
     }
@@ -35,7 +49,7 @@ app.post('/', async function (req) {
       fileURL = await getFileURL(messageId, client);
     }
   }
-  await sendMessageToChat(text, fileURL);
+  await sendMessageToChat(text, fileURL, chatToken);
   sendMessageToLine(client, userId);
 });
 

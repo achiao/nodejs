@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendMessageToLine = void 0;
 const lodash_1 = require("lodash");
 function sendMessage(client, userId) {
-    console.log(client, userId);
     const message = {
         type: 'text',
         text: '傳送成功'

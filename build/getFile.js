@@ -23,6 +23,7 @@ async function getFileURL(messageId, client) {
                     image: base64Image,
                     type: 'base64'
                 });
+                console.log('Imgur: ', response.data);
                 const fileURL = response.data.link;
                 resolve(fileURL);
             });
