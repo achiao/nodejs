@@ -25,9 +25,11 @@ app.post('/', async function (req) {
   } else if (data.destination === process.env.LINE_BOT_DEV) {
     channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_DEV!;
     chatToken = process.env.CHAT_TOKEN_DEV!;
-  } else {
+  } else if (data.destination === process.env.LINE_BOT_11F) {
     channelAccessToken = process.env.CHANNEL_ACCESS_TOKEN_11F!;
     chatToken = process.env.CHAT_TOKEN_11F!;
+  } else {
+    return;
   }
   console.log('channelAccessToken: ', channelAccessToken);
   console.log('chatToken: ', chatToken);
